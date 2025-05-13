@@ -1,0 +1,38 @@
+{% extends "layouts/master.html" %}
+{% load static %}
+
+{% block 'contenu' %}
+<h2 class="titre_page">PAGE DE CONNEXION</h2>
+{% if request.method == "POST" %}
+  {% if erreurs %}
+    <h2> {{erreurs}} </h2>
+  {% endif %}
+{% endif %}
+
+<div class="containerS">
+    <div class="calc">
+        <div class="contant">
+            
+            <!-- <hr> -->
+            <form action="{% url 'connexion_membre' %}" method="POST">
+                {% csrf_token %}
+                <h3>S'identifier</h3>
+                <div class="box">
+                    <input type="text" placeholder="votre identifiant" name="email" autocomplete="off">
+                </div>
+                <div class="box">
+                    <input type="password" placeholder="votre mot de passe" name="mot_de_passe" autocomplete="off">
+                </div>
+                <button class="BTN" type="submit">Connexion</button>
+            </form>
+            <div class="texte">
+                <h2>Bienvenu sur</h2>
+                <h4>COLOSHOP</h4>
+                <a href="{% url 'souscription' %}" class="crer"> Créer un compte </a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock 'contenu' %}

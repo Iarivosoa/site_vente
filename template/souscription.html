@@ -1,0 +1,44 @@
+{% extends "layouts/master.html" %}
+{% load static %}
+
+{% block 'contenu' %}
+<h2 class="titre_page">PAGE DE SOUSCRIPTION</h2>
+{% if request.method == "POST" %}
+  {% if erreurs %}
+    <h2 class="errors"> {{erreurs}}!</h2>
+  {% endif %}
+{% endif %}
+<div class="containerS">
+        <div class="calc">
+            <form action="{% url 'souscription_membre' %}" method="POST" class="souscription" enctype="multipart/form-data" class="formulaire">
+                    {% csrf_token %}
+                <div class="centrage">
+                    <div class="list_box">
+                        <div class="box">
+                            <input type="text" placeholder="votre Nom" name="nom" autocomplete="off" >
+                        </div>
+                        <div class="box">
+                            <input type="text" placeholder="votre prénom" name="prenom"autocomplete="off" >
+                        </div>
+                        <div class="box">
+                            <input type="email" placeholder="votre email" name="email"autocomplete="off" >
+                        </div>
+                    </div>
+                    <div class="list_box">
+                        <div class="box">
+                            <input type="text" placeholder="Mot de passe" name="mot_de_passe" autocomplete="off">
+                        </div>
+                        <div class="box">
+                            <input type="text" placeholder="confirmer votre code" name="confirmer_mdp"autocomplete="off">
+                        </div>
+                        <div class="box">
+                            <input type="file" placeholder="image" name="photo"autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit">Souscrire</button>
+            </form>
+        </div>
+</div>
+{% endblock 'contenu' %}

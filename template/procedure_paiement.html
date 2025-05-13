@@ -1,0 +1,75 @@
+{% extends "layouts/master.html" %}
+{% load static %}
+
+{% block 'contenu' %}
+
+{% if request.method == "POST" %}
+ {% if erreur %}
+   <p> {{erreur}} </p>
+ {% endif %}
+ {% if message %}
+   <h3>{{message}}</h3>
+ {% endif %}
+{% endif %}
+<h2>Paiement</h2>
+
+<div id="affiche_erreur"></div>
+ <form action="{% url 'effectuer_paiement' %}" id="form_paie" method="POST">
+    {% csrf_token %}
+    <input type="email" placeholder="Entrer votre email" name="email_client">
+    <div id="info_carte">
+
+    </div>
+    <p class="prix_finale"></p>
+
+    <div class="token">
+        <input type="text" name="token_stripe" id="token_stripe">
+        <input type="text" name="prix_finale" id="prix_payer">
+        <input type="text" name="commande" id="commande">
+    </div>
+
+    <button type="submit" id="btn_paie">Payer</button>
+ </form>
+
+ <script src="https://js.stripe.com/v3/"></script>
+
+ <script>
+
+var prix_finale = document.querySelector('.prix_finale')
+prix_finale.textContent = sessionStorage.getItem('prix_total')
+
+var stripe = Stripe("{{STRIPE_PUBLIC_KEY}}")
+
+var elements = stripe.elements()
+var card = elements.create('card')
+card.mount('#info_carte')
+
+
+var validate_form = document.getElementById('form_paie')
+validate_form.addEventListener('submit',function(e){
+e.preventDefault()
+
+document.getElementById('btn_paie').disabled = true;
+
+//creation token
+stripe.createToken(card).then(function(resulats){
+    if (resulats.error) {
+        var affiche_erreur = document.getElementById('affiche_erreur')
+        affiche_erreur.textContent = resulats.error.message;
+        document.getElementById('btn_paie').disabled = false
+    } else {
+        var token_stripe = document.getElementById('token_stripe')
+        var prix_payer = document.getElementById('prix_payer')
+        var commande = document.getElementById('commande')
+
+        token_stripe.value = resulats.token.id
+        prix_payer.value = sessionStorage.getItem('prix_total')
+        commande.value = sessionStorage.getItem('commande')
+
+        validate_form.submit()
+    }
+})
+})
+</script>
+
+{% endblock 'contenu' %}

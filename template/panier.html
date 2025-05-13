@@ -1,0 +1,126 @@
+{% extends "layouts/master.html" %}
+{% load static %}
+
+{% block 'contenu' %}
+
+<h2 class="titre_panier  
+animate___animated
+animate_flip
+animate_infinite
+
+">Votre panier du Jour</h2>
+
+<table id="tableau">
+    <tr>
+        <th>Référence Article</th>
+        <th>Nom de l'article</th>
+        <th>Image</th>
+        <th>Prix £</th>
+        <th>Nombre</th>
+        <th>Supprimer</th>
+    </tr>
+    {% if request.session %}
+      {% for panier in request.session.cart %}
+      <tr class="table_produit">
+        <td class="nombre_panier"> {{panier.id_article}} </td>
+        <td class="nom_panier">{{panier.nom_article}}</td>
+        <td><img src="../{{panier.photo_article}}" alt="" width="100px" height="100px" id="image_com"></td>
+        <td class="prix_article">{{panier.prix_article}} £</td>
+        <td><input type="number" value="1" min="1" id="nombre_article"></td>
+        <td><a href="{% url 'supprimer_prod' panier.id_article %}">Supprimer</a></td>
+    </tr>
+      {% endfor %}
+    {% endif %}
+</table>
+
+<div class="com">
+    <p>Le montant total de votre commande est :<input type="number" id="prix_total">£</p>
+</div>
+<div>
+    <button><a href="{% url 'procedure_paiement' %}">Acheter</a></button>
+</div>
+
+<style>
+    table{
+        width: 80%;
+       padding-left: 15px;
+        align-items: center;
+        margin-left: 10rem;
+    }
+    th,td{
+        padding: 12px;
+        align-items: center;
+        text-align: center;
+        width: 10rem;
+    }
+    table,th,td{
+        border: 2px solid black;
+    }
+</style>
+<script>
+    function calcul_total(){
+        var table_produit = document.querySelectorAll('.table_produit')
+        var prix_article = document.querySelectorAll('.prix_article')
+        var nombre_article = document.querySelectorAll('#nombre_article')
+        var nombre_panier = document.querySelectorAll('.nombre_panier')
+
+        var stock_paniers = []
+        nombre_panier.forEach(panier=>{
+            stock_paniers.push(parseInt(panier.textContent))
+        })
+        console.log(stock_paniers.length)
+        var isani_panier = stock_paniers.length
+        if (!sessionStorage.getItem('panier')) {
+            sessionStorage.setItem('panier',JSON.stringify(isani_panier))
+        } else {
+            sessionStorage.setItem('panier',JSON.stringify(isani_panier))
+        }
+
+        var prix_total = document.getElementById('prix_total')
+        var calcul = []
+        prix_article.forEach(prix=>{
+            calcul.push(parseFloat(prix.textContent))
+        })
+        var somme = 0
+        calcul.forEach((prix,nombre)=>{
+            somme += prix*parseInt(nombre_article[nombre].value)
+        })
+
+        if (!sessionStorage.getItem("prix_total")) {
+            sessionStorage.setItem("prix_total",JSON.stringify(somme))
+        } else {
+            sessionStorage.setItem("prix_total",JSON.stringify(somme))
+        }
+        if(somme == 0){
+            sessionStorage.removeItem("prix_total")
+        }
+        prix_total.value = somme
+        return somme
+
+    }
+    setInterval(calcul_total,100)
+
+
+    function stock_donner(){
+        var table_produit = document.querySelectorAll(".table_produit")
+        var commande = []
+
+        table_produit.forEach(prod=>{
+            commande.push({
+                "produit":prod.children[1].textContent,
+                "prix":prod.children[3].textContent,
+                "nombre_article":prod.children[4].children[0].value
+            })
+
+            if (!sessionStorage.getItem("commande")) {
+                sessionStorage.setItem("commande",JSON.stringify(commande))
+            } else {
+                sessionStorage.setItem("commande",JSON.stringify(commande))
+            }
+        
+        })
+    }
+</script>
+
+
+{% endblock 'contenu' %}

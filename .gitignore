@@ -1,0 +1,8 @@
+static/font-awesome
+static/bootstrap-5.2.1-dist
+*.pyc
+*.log
+*.env
+db.sqlite3
+.Vscode/
+.idea/

@@ -1,0 +1,42 @@
+{% extends "layouts/master.html" %}
+{% load static %}
+
+{% block 'contenu' %}
+<form action="" id="recherche_prod" method="GET" class="form_tous">
+  
+    <input type="cherche" placeholder="Recherche" autocomplete="off" name="recherche">
+    <button>Recherche</button>
+</form>
+{% if tous_valeur %}
+<h3>Votre recherche pour {{tous_valeur}} </h3>
+      {% if resultats %}
+           {% for prod in resultats %}
+          <div class="col-lg-4  centour">
+            <div class="spac">
+            <img src="{{prod.photo.url}}" alt="" width="250px" height="250px">
+            <p class="nom_prod">{{prod.nom}}</p>
+            <p class="prix_prod">{{prod.prix}} £</p>
+            <button class="detail"><a href="{% url 'detail' prod.id %}">Voir détail</a></button>
+          </div>
+          </div>
+          {% endfor %}
+      {% endif %}
+{% else %}
+<div class="container">
+  <div class="row row_prod">
+      {% for prod in TousProduit %}
+        <div class="col-lg-4  centour">
+          <div class="spac">
+          <img src="{{prod.photo.url}}" alt="" width="250px" height="250px">
+          <p class="nom_prod">{{prod.nom}}</p>
+          <p class="prix_prod">{{prod.prix}} £</p>
+          <button class="detail"><a href="{% url 'detail' prod.id %}">Voir détail</a></button>
+        </div>
+        </div>
+      {% endfor %}
+  </div>
+</div>
+
+{% endif %}
+
+{% endblock 'contenu' %}

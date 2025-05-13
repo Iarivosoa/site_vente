@@ -1,0 +1,150 @@
+{% extends "layouts/master.html" %}
+{% load static %}
+
+{% block 'contenu' %}
+
+
+<script>
+    function cliks(a){
+        var affiche_article = document.querySelectorAll('.all_produit')
+        affiche_article.forEach(article =>{
+            console.log(article)
+            var split_article = a.split(" ")[0]
+            console.log(split_article)
+            console.log(a)
+            if (article.classList.contains('list_type' + split_article)) {
+                article.style.display = "block"
+            } else {
+                article.style.display = "none"
+            }
+        });
+    }
+</script>
+
+
+
+
+<main class="slide_one">
+    <div class="title">
+        <h1>Une remise de 30%</h1>
+        <h2  data-aos="fade-down" data-aos-delay="1000">Pour le New Arrival</h2>
+        <button>SHOP NOW</button>
+    </div>
+</main>
+<main class="model"> 
+        <div class="">
+            <img src="{% static 'image/banner01.jpg' %}" alt="">
+            <p>Femme</p>
+        </div>
+        <div class="">
+            <img src="{% static 'image/banner-05.jpg' %}" alt="">
+            <p>Homme</p>
+        </div>
+        <div class="">
+            <img src="{% static 'image/banner-08.jpg' %}" alt="">
+            <p>accéssoire</p>
+        </div>
+</main>
+
+<main class="New">
+<h2>New Arrival</h2>
+</main>
+<!-- Les produi promotion -->
+<main class="Nouveau_produit">
+    <div class="container flex_prod">
+        <div class="row row_prod">
+            {% for prod in produit %}
+              <div class="col-lg-4 col-md-6 centour">
+                <div class="spac">
+                <img src="{{prod.photo.url}}" alt="" width="250px" height="250px">
+                <p class="nom_prod">{{prod.nom}}</p>
+                <p class="prix_prod">{{prod.prix}} £</p>
+                <button class="detail"><a href="{% url 'detail' prod.id %}">Voir détail</a></button>
+                </div>
+              </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+  
+<main class="btn_tous"><button class="TousProd"><a href="{% url 'Tous_Produit' %}">Voir tous les produits</a></button></main>
+
+<main>
+    <div class="buton_type">
+        <button type="button" onclick="cliks('Tous')" id="btn">All</button>
+        {% for type in affiche_type %}
+        <button type="button" onclick="cliks('{{type}}')" id="{{type}}">{{type}}</button>
+        {% endfor %}
+    </div>
+</main>
+<!-- affichage de chaque produit à chaque type -->
+<main class="affiche_type">
+    <!-- AFFICHAGE DE TOUS LES PRODUITS -->
+    <div class="all_produit list_typeTous container">
+        <div class="row row_prod ">
+            {% for prod in TousProduit %}
+              <div class="col-lg-4 centour">
+                <div class="spac">
+                <img src="{{prod.photo.url}}" alt="" width="100%"  height="300px">
+                <p class="nom_prod">{{prod.nom}}</p>
+                <p class="prix_prod">{{prod.prix}} £</p>
+                <button class="detail"><a href="{% url 'detail' prod.id %}">Voir détail</a></button>
+                 </div>
+              </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- AFFICHAGE DE CHAQUE TYPE -->
+    {% for produit in affiche_type %}
+        <div class="all_produit containers list_type{{produit}}" >
+            <div class="container">
+                <div class="row">
+                    {% for prod in affiche_type %}
+
+                        {% if prod == produit %}
+                        
+                            {% for types in TousProduit %}
+                                {% if types.type == produit %}
+                                <div class="col-lg-4  centour m-2">
+                                    <div class="spac">
+                                    <img src="{{types.photo.url}}" class="img-fluid" >
+                                    <p class="nom_prod">{{types.nom}}</p>
+                                    <p class="prix_prod">{{types.prix}} £</p>
+                                    <button class="detail"><a href="{% url 'detail' types.id %}">Voir détail</a></button>
+                                     </div>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                        
+                        {% endif %}
+                    
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+   
+</main>
+<!-- suite  -->
+
+<main class="slide_two">
+<div class="parents">
+    <div class="child"><h3>Notre promotion terminera</h3></div>
+    <div class="child">
+        <div class="square"><p>16</p></div>
+        <div class="square"><p>17</p></div>
+        <div class="square"><p>18</p></div>
+        <div class="month"><p>JUIN</p></div>
+    </div>
+    <div class="child"><button>SHOP NOW</button></div>
+</div>
+</main>
+
+<main class="styles">
+<div class="img_styl1"></div>
+<div class="img_styl2"></div>
+<div class="img_styl3"></div>
+</main>
+
+
+{% endblock 'contenu' %}

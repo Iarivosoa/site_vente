@@ -1,0 +1,18 @@
+<main>
+    <p>Nom : {{request.session.client.nom_membre}} </p>
+    <p>facture numéro : </p>
+    <p>Montant total : <span id="prix"></span> </p>
+    <p >date de paiement : {{date}} </p>
+
+    <div id="commande">
+        commande : 
+    </div>
+
+    <a href="{% url 'telecharge' %}">Télécharger</a>
+</main>
+<script>
+    var prix = document.getElementById("prix")
+    var commande = document.getElementById("commande")
+     prix.textContent = `${sessionStorage.getItem("prix_total")} £`
+     commande.textContent = sessionStorage.getItem("commande").valueOf("produit")
+</script>

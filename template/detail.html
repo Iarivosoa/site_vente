@@ -1,0 +1,85 @@
+{% extends "layouts/master.html" %}
+{% load static %}
+
+{% block 'contenu' %}
+<script>
+
+
+var MainImg = document.getElementById("MainImg")
+var SmallImg = document.getElementsByClassName("small-img")
+
+SmallImg[0].onclick = function(){
+  MainImg.src = SmallImg[0].src;
+}
+
+SmallImg[1].onclick = function(){
+  MainImg.src = SmallImg[1].src;
+}
+
+SmallImg[2].onclick = function(){
+  MainImg.src = SmallImg[2].src;
+}
+
+SmallImg[3].onclick = function(){
+  MainImg.src = SmallImg[3].src;
+}
+
+</script>
+{{id_utilisateur}}
+{{commente}}
+
+<div class="centrage">
+    <div class="prod_detail1">
+        <img src="{{detail.photo.url}}" alt="" id="MainImg">
+        <div class="list_img small-img-groupe">
+            <div class="list small-img-col"><img src="{{detail.photo.url}}" alt="" class="small-img"></div>
+            <div class="list small-img-col"><img src="{{detail.photo2.url}}"   class="small-img" alt=""></div>
+            <div class="list small-img-col"><img src="{{detail.photo3.url}}"   class="small-img"  alt=""></div>
+        </div>
+    </div>
+    {% if request.method == "POST" %}
+      <p> {{message}}</p>
+    {% endif %}
+    {% if request.session.client %}
+
+      <form action="{% url 'commentaire' %}" method="POST">
+        {% csrf_token %}
+        <textarea name="commentaire" id="" cols="30" rows="10"></textarea>
+        <input type="hidden" name="id_produit" value="{{detail.id}}">
+        <button type="submit">commenter</button>
+      </form>
+      
+      <!-- champs pour le commentaire -->
+      <div class="affiche_commentaire">
+        <p> {{nombre_commentaire}}</p>
+        {% for coms in commentaire %}
+          <p> Nom :  {{coms.7}} </p>
+          <ul>
+            <li> {{coms.3}} </li>
+          </ul>
+          {{coms}}
+          <form action="{% url 'suppression_commente' coms.0 %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="id_produit" value="{{detail.id}}">
+            <button type="submit">Supprimer</button>
+          </form>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <div class="prod_detail">
+        <p class="titre">{{detail.nom}}</p>
+        <p class="description">{{detail.description}}</p>
+        <p class="prix_pro">{{detail.prix}} £</p>
+
+        {% if request.session.client %}
+          <button><a href="{% url 'ajouter_panier' detail.id %}">Ajotuter au panier</a></button>
+        {% endif %} 
+    </div>
+
+  
+
+</div>
+
+
+
+{% endblock 'contenu' %}

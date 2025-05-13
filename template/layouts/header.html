@@ -1,0 +1,33 @@
+
+{% if request.session.client %}
+<script>
+
+</script>
+<header>
+    <div class="ombre_nav"></div>
+    <nav class="nav connexio_nav" >
+        <h1>COLO<span class="red">SHOP</span></h1>
+        <ul>
+            <li><a href="{% url 'accueil' %}"><i class="fas fa-home"></i><span>ACCUEIL</span></a></li>
+            <li><a href="{% url 'Tous_Produit' %}"><i class="fas fa-pager"></i><span>PAGE</span></a></li>
+            <li><a href=""><i class="fas fa-shopping-bag"></i><span>SHOP</span></a></li>
+            <li><div class="chiffer"></div><a href="{% url 'panier' %}"><i class="fas fa-cart-plus"></i><span>PANIER</span><span id="chiffre_panier">0</span></a></div>  </li>
+            <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i><span>DECONNEXION</span></a></li>
+        </ul>
+    </nav>
+</header>
+{% else %}
+<header>
+    <div class="ombre_nav"></div>
+    <nav class="nav ">
+        <span>COLO<span class="red">SHOP</span></span>
+        <ul>
+            <li><a href="{% url 'accueil' %}"><i class="fas fa-home"></i><span>ACCUEIL</span></a></li>
+            <li><a href="{% url 'Tous_Produit' %}"><i class="fas fa-pager"></i><span>PAGE</span></a></li>
+             <li><a href=""><i class="fas fa-shopping-bag"></i><span>SHOP</span></a></li>
+           <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i><span>connexion</span></a></li>
+        </ul>
+    </nav>
+</header>
+
+{% endif %}
