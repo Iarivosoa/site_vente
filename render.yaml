@@ -2,6 +2,7 @@ services:
   - type: web
     name: site_pratique_colo
     env: python
+    plan: free
     buildCommand: |
       pip install -r requirements.txt
       python manage.py collectstatic --noinput
@@ -12,4 +13,3 @@ services:
         value: site_pratique_colo.settings
       - key: PYTHON_VERSION
         value: 3.10.12
-    autoDeploy: true
