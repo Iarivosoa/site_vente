@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: SITE_PRATIQUE_COLO
+    name: mon-projet-django
     env: python
     buildCommand: |
       pip install -r requirements.txt
@@ -13,25 +13,3 @@ services:
       - key: PYTHON_VERSION
         value: 3.10
     plan: free
-
-staticSites:
-  - name: static
-    buildCommand: ""
-    publishPath: static
-
-# Optionnel : pour s'assurer que le fichier SQLite est conservé
-# Ajouter un volume pour persister le fichier db.sqlite3
-volumes:
-  - name: django-sqlite-db
-    mountPath: /var/data
-    sizeGB: 1
-
-# Ajouter la variable d'environnement pour utiliser ce chemin
-# dans votre settings.py :
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': '/var/data/db.sqlite3',
-#     }
-# }
-
