@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-%j5t^yznr-$zprx+1@$gt@86wy5kqxwbd8bs55c+7m^i!66)y!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.onrender.com']
 
 #
 EMAIL_HOST = "smtp.gmail.com"
@@ -136,6 +136,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,STATIC_URL)
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
