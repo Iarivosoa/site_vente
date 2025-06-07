@@ -10,5 +10,5 @@ class insertion_produit(models.Model):
     photo3 = models.ImageField(upload_to="static/image")
     type = models.CharField(max_length=250)
 
-def __str__(self):
-    return self.nom
+    def __str__(self):
+        return self.nom
