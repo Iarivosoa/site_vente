@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-%j5t^yznr-$zprx+1@$gt@86wy5kqxwbd8bs55c+7m^i!66)y!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.onrender.com']
+ALLOWED_HOSTS = ['*','localhost','127.0.0.1']
 
 #
 EMAIL_HOST = "smtp.gmail.com"

@@ -13,8 +13,7 @@ from django.http import HttpResponse
 from django.template.loader import render_to_string
 import io
 from django.http import FileResponse
-from reportlab.pdfgen import canvas
-from wkhtmltopdf.views import PDFTemplateView
+from .views import*
 
 
 
